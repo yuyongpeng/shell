@@ -92,9 +92,16 @@ rsync_code(){
     case "$proj" in 
         'mobile')
             echo "代码同步完成后执行的附加命令："
-            echo "ssh -p 2345 $host \"cd /HC/HTML/mobile; npm run release\""
-            ssh -p 2345 $host "cd /HC/HTML/mobile; npm run release"
-            #ssh -p 2345 $host /etc/test.sh
+            if [[ $MODE -eq "release" ]];then
+                echo "ssh -p 2345 $host \"cd /HC/HTML/mobile; npm run release\""
+                ssh -p 2345 $host "cd /HC/HTML/mobile; npm run release"
+                #ssh -p 2345 $host /etc/test.sh
+            fi
+            if [[ $MODE -eq "product" ]];then
+                echo "ssh -p 2345 $host \"cd /HC/HTML/mobile; npm run build\""
+                ssh -p 2345 $host "cd /HC/HTML/mobile; npm run build"
+                #ssh -p 2345 $host /etc/test.sh
+            fi
         ;;
         'dphotos')
             echo "dphotos"
@@ -234,7 +241,7 @@ case "$MODE" in
     *)
       # usage
       basename=`basename "$0"`
-      echo "Usage: $basename {release|product} proj_name branch_name tag_name [code online]"
+      echo "Usage: $basename {release|product} proj_name branch_name [tag_name|commit_id]"
       exit 1
     ;;
 esac
