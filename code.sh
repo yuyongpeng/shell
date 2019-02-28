@@ -125,7 +125,7 @@ git_update(){
             echo "更新的是 ${BRANCH_NAME} 分支的最新commit"
             git checkout ${BRANCH_NAME}
         else
-            echo "****** ERROR: ******"
+            echo -e "\033[31m ****** ERROR: ****** \033[0m"
             echo "项目：${PROJ_NAME}, BRANCH=${BRANCH_NAME} 不存在，暂停更新动作"
             exit
         fi
@@ -135,7 +135,7 @@ git_update(){
             echo "更新的是 ${BRANCH_NAME} 分支的 TAG=${TAG_NAME}"
             git checkout ${TAG_NAME}
         else
-            echo "****** ERROR: ******"
+            echo -e "\033[31m ****** ERROR: ****** \033[0m"
             echo "项目：${PROJ_NAME}, TAG=${TAG_NAME} 不存在，暂停更新动作"
             if [[ $COMMIT_OR_TAG -eq 1 ]];then
                 # 0:COMMIT ; 1:TAG
@@ -148,7 +148,7 @@ git_update(){
             echo "更新的是 ${BRANCH_NAME} 分支的 COMMIT_ID=${COMMIT_ID}"
             git reset --hard ${COMMIT_ID}
         else
-            echo "****** ERROR: ******"
+            echo -e "\033[31m ****** ERROR: ****** \033[0m"
             echo "项目：${PROJ_NAME}, COMMIT_ID=${COMMIT_ID} 不存在，暂停更新动作"
             if [[ $COMMIT_OR_TAG -eq 0 ]];then
                 # 0:COMMIT ; 1:TAG
