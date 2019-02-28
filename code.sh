@@ -2,10 +2,11 @@
 #####################################################
 # 说明: 代码上线的脚本
 # 调用方式: code.sh (release|product) proj_name branch_name [tag_name|commit_id]
-# 把 proj项目指定的分支和tag上线到release环境
+# 把 proj项目指定的分支、tag、commit id 上线到release或者product环境
 # 
 # 需要把这台机器的公钥放到发布机器上，实现免密登录
 # 需要把公钥放到gitlab，可以免密git clone 代码
+# 需要在/data/code 目录clone项目
 # auth: yuyongpeng@hotmail.com
 #####################################################
 
