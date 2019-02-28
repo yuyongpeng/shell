@@ -46,9 +46,9 @@ BACKUP_RELEASE_PATH=${BACKUP_PATH}/release  # release环境的代码本地备份
 mobile_HOSTS=( web-server-1 )
 www_HOSTS=( web-server-1 )
 dphotos_HOSTS=( web-server-1 )
-mobile_EXTS=( .git )
-www_EXTS=( .git )
-dphotos_EXTS=( .git )
+mobile_EXTS=( .git .gitignore )
+www_EXTS=( .git .gitignore )
+dphotos_EXTS=( .git .gitignore )
 
 
 #####################################################
