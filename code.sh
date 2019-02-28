@@ -44,8 +44,11 @@ BACKUP_PRODUCT_PATH=${BACKUP_PATH}/product  # 生产环境的代码本地备份�
 BACKUP_RELEASE_PATH=${BACKUP_PATH}/release  # release环境的代码本地备份路径
 #### 每一个项目发布到对应的服务器
 mobile_HOSTS=( web-server-1 )
-mobile_EXTS=( .git help )
-dphotos_HOSTS=( web-server-1 web-server-2 web-server-3 )
+www_HOSTS=( web-server-1 )
+dphotos_HOSTS=( web-server-1 )
+mobile_EXTS=( .git )
+www_EXTS=( .git )
+dphotos_EXTS=( .git )
 
 
 #####################################################
@@ -92,14 +95,14 @@ rsync_code(){
     case "$proj" in 
         'mobile')
             echo "代码同步完成后执行的附加命令："
-            if [[ $MODE -eq "release" ]];then
-                echo "ssh -p 2345 $host \"cd /HC/HTML/mobile; npm run release\""
-                ssh -p 2345 $host "cd /HC/HTML/mobile; npm run release"
+            if [[ $MODE == "release" ]];then
+                echo "ssh -p 2345 $host \"cd /HC/HTML/mobile; source /etc/profile; npm run release\""
+                ssh -p 2345 $host "cd /HC/HTML/mobile; source /etc/profile; npm run release"
                 #ssh -p 2345 $host /etc/test.sh
             fi
-            if [[ $MODE -eq "product" ]];then
-                echo "ssh -p 2345 $host \"cd /HC/HTML/mobile; npm run build\""
-                ssh -p 2345 $host "cd /HC/HTML/mobile; npm run build"
+            if [[ $MODE == "product" ]];then
+                echo "ssh -p 2345 $host \"cd /HC/HTML/mobile; source /etc/profile; npm install --unsafe-perm=true --allow-root; npm run build\""
+                ssh -p 2345 $host "cd /HC/HTML/mobile; source /etc/profile; npm install --unsafe-perm=true --allow-root; npm run build"
                 #ssh -p 2345 $host /etc/test.sh
             fi
         ;;
@@ -159,10 +162,15 @@ git_update(){
 backup_release_date(){
     proj=$1
     mkdir -p $BACKUP_RELEASE_PATH/${proj}_$g_curTime
+    echo "备份代码到本地 (带有时间的后缀)"
+    echo "rsync -e 'ssh -p 2345' -artz root@$RELEASE_SERVER:$PUBLISH_PATH/$proj/* $BACKUP_RELEASE_PATH/${proj}_$g_curTime/*"
     rsync -e 'ssh -p 2345' -artz root@$RELEASE_SERVER:$PUBLISH_PATH/$proj/* $BACKUP_RELEASE_PATH/${proj}_$g_curTime/*
 }
 backup_release(){
     proj=$1
+    mkdir -p $BACKUP_RELEASE_PATH/${proj}/
+    echo "备份代码到本地"
+    echo "rsync -e 'ssh -p 2345' -artz root@$RELEASE_SERVER:$PUBLISH_PATH/$proj/* $BACKUP_RELEASE_PATH/${proj}/*"
     rsync -e 'ssh -p 2345' -artz root@$RELEASE_SERVER:$PUBLISH_PATH/$proj/* $BACKUP_RELEASE_PATH/${proj}/*
 }
 # 备份生产环境的代码
