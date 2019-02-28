@@ -120,7 +120,7 @@ git_update(){
     git checkout ${BRANCH_NAME}
     # 2个变量都没有值
     if [[ ! -n ${TAG_NAME} && ! -n ${COMMIT_ID} ]];then
-        branch_count=`git branch -a | grep origin | grep ${BRANCH_NAME} | wc -l`
+        branch_count=`git branch -a | grep origin | egrep remotes/origin/${BRANCH_NAME}$ | wc -l`
         if [[ $branch_count -ge 1 ]];then
             echo "更新的是 ${BRANCH_NAME} 分支的最新commit"
             git checkout ${BRANCH_NAME}
