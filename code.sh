@@ -198,7 +198,7 @@ release(){
 # 上线代码到product环境
 product(){
     # 把release的代码拷贝到本地
-    backup_release $PROJ_NAME
+    # backup_release $PROJ_NAME
     echo "代码上线到 product 环境"
     # 代码上线
     eval servers=\(\${${PROJ_NAME}_HOSTS[*]}\)
