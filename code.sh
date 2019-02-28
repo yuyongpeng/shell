@@ -187,7 +187,7 @@ init_code(){
 # 上线代码到release环境
 release(){
     # 先备份release_host上的代码
-    backup_release_date $PROJ_NAME
+    # backup_release_date $PROJ_NAME
     # 更新代码
     git_update
     # 代码上线
